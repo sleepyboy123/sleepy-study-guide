@@ -54,6 +54,6 @@ All community-corrected questions flagged with `communityCorrection: true` for u
 
 - Embed question JSON in the app bundle (no separate fetch)
 - Use community corrections for mismatched questions (with review flag)
-- React + Vite stack
+- React + Vite stack with shadcn/ui components and Tailwind CSS
 - One-at-a-time immediate feedback mode
 - Flag uncertain answers as "needs review" rather than skipping or guessing

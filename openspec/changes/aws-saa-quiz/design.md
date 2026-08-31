@@ -12,6 +12,12 @@ Phase 2 (runtime):     React SPA <- imports questions.json <- localStorage for s
 The extraction script is a one-shot build tool.
 The quiz app is a static SPA with no runtime dependencies beyond a browser.
 
+## UI Framework
+
+shadcn/ui for component primitives (Button, Card, Select, Badge, Progress, etc.) with Tailwind CSS for styling.
+This gives a polished, consistent look out of the box with minimal custom CSS.
+shadcn components are copy-pasted into the project (not a dependency), so they are fully customizable.
+
 ## Project Structure
 
 ```
@@ -23,6 +29,7 @@ aws-study-guide/
     data/
       questions.json              # generated output, checked into git
     components/
+      ui/                         # shadcn/ui components (Button, Card, Select, etc.)
       App.jsx                     # top-level state machine (dashboard | quiz | review)
       Dashboard.jsx               # landing page with stats and controls
       Quiz.jsx                    # main quiz flow controller
@@ -32,8 +39,13 @@ aws-study-guide/
       ReviewQueue.jsx             # flagged questions for user review
     hooks/
       useQuizState.js             # localStorage-backed quiz state management
+    lib/
+      utils.js                    # shadcn cn() utility
     main.jsx                      # React entry point
-    index.css                     # styles
+    index.css                     # Tailwind directives + minimal custom styles
+  components.json                 # shadcn/ui config
+  tailwind.config.js              # Tailwind config
+  postcss.config.js               # PostCSS config for Tailwind
   index.html
   vite.config.js
   package.json
