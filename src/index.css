@@ -25,6 +25,18 @@ p, li, label {
 }
 
 /* Left-align text only - never justify */
-* {
+body {
   text-align: left;
+}
+
+/* Alert dialog overlay: darker + blurred for clear separation */
+[data-slot="alert-dialog-overlay"] {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Alert dialog content: stronger elevation */
+[data-slot="alert-dialog-content"] {
+  background-color: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
