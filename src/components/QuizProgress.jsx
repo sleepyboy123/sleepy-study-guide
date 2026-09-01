@@ -5,8 +5,8 @@ export default function QuizProgress({ current, total, stats }) {
   const progressPercent = total > 0 ? (current / total) * 100 : 0;
 
   return (
-    <div className="mb-5">
-      <Progress value={progressPercent} className="h-1.5 mb-2" />
+    <div className="mb-6">
+      <Progress value={progressPercent} className="h-2 mb-3" />
       <div className="flex justify-between text-sm text-muted-foreground">
         <span>Question {current + 1} of {total}</span>
         <span>

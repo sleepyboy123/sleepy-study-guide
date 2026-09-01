@@ -19,7 +19,7 @@ export default function Feedback({ question, answer }) {
         <span className="font-semibold">Correct answer: </span>
         {question.correctAnswer.join(', ')}
       </p>
-      <p className="text-sm leading-6 text-foreground/80">
+      <p className="leading-7 tracking-wide text-foreground/80">
         {question.explanation}
       </p>
       {question.confidence !== 'high' && (

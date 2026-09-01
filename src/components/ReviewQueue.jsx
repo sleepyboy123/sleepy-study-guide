@@ -70,13 +70,13 @@ export default function ReviewQueue({ quizState, onExit }) {
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm leading-6 mb-3">{q.question}</p>
-                <div className="mb-3 space-y-1">
+                <p className="leading-8 tracking-wide mb-4">{q.question}</p>
+                <div className="mb-4 space-y-2">
                   {q.options.map(opt => (
                     <div
                       key={opt.key}
                       className={cn(
-                        'text-sm px-2.5 py-1.5 rounded',
+                        'px-3 py-2 rounded leading-7 tracking-wide',
                         q.correctAnswer.includes(opt.key) && 'bg-green-50'
                       )}
                     >
@@ -84,7 +84,7 @@ export default function ReviewQueue({ quizState, onExit }) {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm mb-2">
+                <p className="mb-2">
                   <span className="font-semibold">Answer:</span> {q.correctAnswer.join(', ')}
                   {answer && (
                     <span className={answer.correct ? 'text-green-600' : 'text-red-600'}>
@@ -92,7 +92,7 @@ export default function ReviewQueue({ quizState, onExit }) {
                     </span>
                   )}
                 </p>
-                <p className="text-sm text-muted-foreground mb-3">{q.explanation}</p>
+                <p className="text-muted-foreground leading-7 tracking-wide mb-4">{q.explanation}</p>
                 <div className="flex gap-2">
                   <Button
                     size="sm"

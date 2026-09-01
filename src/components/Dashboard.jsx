@@ -56,16 +56,16 @@ export default function Dashboard({ quizState, onStartQuiz, onOpenReview }) {
       </div>
 
       <div className="flex flex-wrap gap-3 mb-6">
-        <Button onClick={onStartQuiz}>
+        <Button variant="outline" onClick={onStartQuiz}>
           {stats.answered > 0 ? 'Continue Quiz' : 'Start Quiz'}
         </Button>
-        <Button variant="secondary" onClick={onOpenReview}>
+        <Button variant="outline" onClick={onOpenReview}>
           Review Flagged ({needsReviewCount})
         </Button>
         {stats.answered > 0 && (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">Reset Progress</Button>
+              <Button className="bg-red-600 hover:bg-red-700 text-white">Reset Progress</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>

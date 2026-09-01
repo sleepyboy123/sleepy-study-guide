@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+/* Dyslexia-friendly defaults */
+:root {
+  --font-dyslexia: 'Atkinson Hyperlegible', sans-serif;
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  font-family: var(--font-dyslexia);
+  background-color: #faf8f3; /* warm off-white - reduces visual stress */
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  word-spacing: 0.1em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Limit line length for readability */
+p, li, label {
+  max-width: 70ch;
+}
+
+/* Left-align text only - never justify */
+* {
+  text-align: left;
+}
