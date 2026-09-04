@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 
 export default function Feedback({ question, answer }) {
   if (!answer) return null;
@@ -22,11 +21,6 @@ export default function Feedback({ question, answer }) {
       <p className="leading-7 tracking-wide text-foreground/80">
         {question.explanation}
       </p>
-      {question.confidence !== 'high' && (
-        <Badge variant="outline" className="mt-3">
-          {question.confidence} confidence
-        </Badge>
-      )}
     </div>
   );
 }
