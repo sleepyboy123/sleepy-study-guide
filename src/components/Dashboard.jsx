@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
-import { getReviewStatusKey } from '@/hooks/useQuizState';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -13,22 +11,6 @@ export default function Dashboard() {
   const { quizState, questions: questionsData, exam, slug } = useOutletContext();
   const navigate = useNavigate();
   const { stats, categories, answers, settings, updateSettings, resetQuiz } = quizState;
-
-  const [reviewStatus] = useState(() => {
-    try {
-      const stored = localStorage.getItem(getReviewStatusKey(slug));
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
-    }
-  });
-
-  const flaggedQuestions = questionsData.filter(
-    q => q.confidence !== 'high' || q.communityCorrection
-  );
-  const needsReviewCount = flaggedQuestions.filter(
-    q => reviewStatus[q.id] !== 'verified'
-  ).length;
 
   const categoryStats = categories.map(([cat, total]) => {
     const catQuestions = questionsData.filter(q => q.category === cat);
@@ -60,9 +42,6 @@ export default function Dashboard() {
       <div className="flex flex-wrap gap-3 mb-6">
         <Button variant="outline" onClick={() => navigate('quiz')}>
           {stats.answered > 0 ? 'Continue Quiz' : 'Start Quiz'}
-        </Button>
-        <Button variant="outline" onClick={() => navigate('review')}>
-          Review Flagged ({needsReviewCount})
         </Button>
         {stats.answered > 0 && (
           <AlertDialog>
@@ -122,23 +101,6 @@ export default function Dashboard() {
                   {categories.map(([cat, count]) => (
                     <SelectItem key={cat} value={cat}>{cat} ({count})</SelectItem>
                   ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium">Confidence:</label>
-              <Select
-                value={settings.filterConfidence || 'all'}
-                onValueChange={val => updateSettings({ filterConfidence: val === 'all' ? null : val })}
-              >
-                <SelectTrigger className="w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All levels</SelectItem>
-                  <SelectItem value="high">High confidence</SelectItem>
-                  <SelectItem value="medium">Medium confidence</SelectItem>
-                  <SelectItem value="needs-review">Needs review</SelectItem>
                 </SelectContent>
               </Select>
             </div>

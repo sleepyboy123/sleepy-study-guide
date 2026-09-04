@@ -6,7 +6,6 @@ import './index.css';
 
 const legacyMigrations = [
   ['aws-saa-quiz-state', 'sleepy-aws-saa-quiz-state'],
-  ['aws-saa-review-status', 'sleepy-aws-saa-review-status'],
 ]
 for (const [oldKey, newKey] of legacyMigrations) {
   const data = localStorage.getItem(oldKey)

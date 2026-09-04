@@ -3,7 +3,6 @@ import ExamPicker from './ExamPicker'
 import ExamLayout from './ExamLayout'
 import Dashboard from './Dashboard'
 import Quiz from './Quiz'
-import ReviewQueue from './ReviewQueue'
 
 export default function App() {
   return (
@@ -12,7 +11,6 @@ export default function App() {
       <Route path="/exam/:slug" element={<ExamLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="quiz" element={<Quiz />} />
-        <Route path="review" element={<ReviewQueue />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

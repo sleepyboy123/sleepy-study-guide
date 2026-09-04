@@ -1,7 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 
 export const getStorageKey = (slug) => `sleepy-${slug}-quiz-state`
-export const getReviewStatusKey = (slug) => `sleepy-${slug}-review-status`
 
 function loadState(slug) {
   try {
@@ -15,6 +14,7 @@ function loadState(slug) {
       !Array.isArray(saved.shuffleOrder) ||
       typeof saved.settings !== 'object' || saved.settings === null
     ) return null;
+    delete saved.settings.filterConfidence;
     return saved;
   } catch {
     return null;
@@ -38,7 +38,6 @@ const DEFAULT_SETTINGS = {
   shuffleQuestions: true,
   showOnlyUnanswered: false,
   filterCategory: null,
-  filterConfidence: null,
 };
 
 export default function useQuizState(slug, questionsData) {
@@ -65,9 +64,6 @@ export default function useQuizState(slug, questionsData) {
     let filtered = questionsData;
     if (state.settings.filterCategory) {
       filtered = filtered.filter(q => q.category === state.settings.filterCategory);
-    }
-    if (state.settings.filterConfidence) {
-      filtered = filtered.filter(q => q.confidence === state.settings.filterConfidence);
     }
     if (state.settings.showOnlyUnanswered) {
       filtered = filtered.filter(q => !state.answers[q.id]);
