@@ -44,7 +44,7 @@ src/data/exams/
   "name": "Solutions Architect Associate",
   "provider": "AWS",
   "code": "SAA-C02",
-  "description": "571 questions",
+  "questionCount": 571,
   "color": "#f97316"
 }
 ```
