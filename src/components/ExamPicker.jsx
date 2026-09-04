@@ -52,7 +52,7 @@ export default function ExamPicker() {
                       <div className="bg-muted rounded-md h-1.5 overflow-hidden mb-1.5">
                         <div
                           className="bg-green-500 h-full rounded-md transition-all"
-                          style={{ width: `${(progress.answered / exam.meta.questionCount) * 100}%` }}
+                          style={{ width: `${Math.min((progress.answered / exam.meta.questionCount) * 100, 100)}%` }}
                         />
                       </div>
                       <p className="text-muted-foreground text-xs">
