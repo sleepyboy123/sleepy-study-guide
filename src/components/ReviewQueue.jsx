@@ -1,16 +1,18 @@
 import { useState } from 'react';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import questionsData from '@/data/questions.json';
-import { REVIEW_STATUS_KEY } from '@/hooks/useQuizState';
+import { getReviewStatusKey } from '@/hooks/useQuizState';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-export default function ReviewQueue({ quizState, onExit }) {
+export default function ReviewQueue() {
+  const { quizState, questions: questionsData, slug } = useOutletContext();
+  const navigate = useNavigate();
   const { answers } = quizState;
   const [reviewStatus, setReviewStatus] = useState(() => {
     try {
-      const stored = localStorage.getItem(REVIEW_STATUS_KEY);
+      const stored = localStorage.getItem(getReviewStatusKey(slug));
       return stored ? JSON.parse(stored) : {};
     } catch {
       return {};
@@ -24,7 +26,7 @@ export default function ReviewQueue({ quizState, onExit }) {
   function updateReviewStatus(id, status) {
     const next = { ...reviewStatus, [id]: status };
     setReviewStatus(next);
-    localStorage.setItem(REVIEW_STATUS_KEY, JSON.stringify(next));
+    localStorage.setItem(getReviewStatusKey(slug), JSON.stringify(next));
   }
 
   const verified = flaggedQuestions.filter(q => reviewStatus[q.id] === 'verified').length;
@@ -35,7 +37,7 @@ export default function ReviewQueue({ quizState, onExit }) {
     <div className="max-w-4xl mx-auto p-5">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">Review Queue</h1>
-        <Button variant="secondary" onClick={onExit}>Back to Dashboard</Button>
+        <Button variant="secondary" onClick={() => navigate('..')}>Back to Dashboard</Button>
       </div>
 
       <div className="flex gap-4 mb-5 text-sm text-muted-foreground">

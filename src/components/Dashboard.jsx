@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import questionsData from '@/data/questions.json';
-import { REVIEW_STATUS_KEY } from '@/hooks/useQuizState';
+import { useOutletContext, useNavigate } from 'react-router-dom';
+import { getReviewStatusKey } from '@/hooks/useQuizState';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -9,12 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
-export default function Dashboard({ quizState, onStartQuiz, onOpenReview }) {
+export default function Dashboard() {
+  const { quizState, questions: questionsData, exam, slug } = useOutletContext();
+  const navigate = useNavigate();
   const { stats, categories, answers, settings, updateSettings, resetQuiz } = quizState;
 
   const [reviewStatus] = useState(() => {
     try {
-      const stored = localStorage.getItem(REVIEW_STATUS_KEY);
+      const stored = localStorage.getItem(getReviewStatusKey(slug));
       return stored ? JSON.parse(stored) : {};
     } catch {
       return {};
@@ -37,7 +39,7 @@ export default function Dashboard({ quizState, onStartQuiz, onOpenReview }) {
 
   return (
     <div className="max-w-4xl mx-auto p-5">
-      <h1 className="text-3xl font-bold mb-5">AWS SAA Quiz</h1>
+      <h1 className="text-3xl font-bold mb-5">{exam.meta.name} Quiz</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
@@ -56,10 +58,10 @@ export default function Dashboard({ quizState, onStartQuiz, onOpenReview }) {
       </div>
 
       <div className="flex flex-wrap gap-3 mb-6">
-        <Button variant="outline" onClick={onStartQuiz}>
+        <Button variant="outline" onClick={() => navigate('quiz')}>
           {stats.answered > 0 ? 'Continue Quiz' : 'Start Quiz'}
         </Button>
-        <Button variant="outline" onClick={onOpenReview}>
+        <Button variant="outline" onClick={() => navigate('review')}>
           Review Flagged ({needsReviewCount})
         </Button>
         {stats.answered > 0 && (

@@ -36,21 +36,21 @@
 - Produces: `useQuizState(slug, questions)` hook accepting slug string and questions array
 - Produces: `getStorageKey(slug)` and `getReviewStatusKey(slug)` exported from `src/hooks/useQuizState.js`
 
-- [ ] **Step 1: Install react-router-dom**
+- [x] **Step 1: Install react-router-dom**
 
 ```bash
 npm install react-router-dom
 ```
 
-- [ ] **Step 2: Rename project in package.json**
+- [x] **Step 2: Rename project in package.json**
 
 Change the `"name"` field from `"aws-saa-quiz"` to `"sleepy-study-guide"`.
 
-- [ ] **Step 3: Update index.html title**
+- [x] **Step 3: Update index.html title**
 
 Change the `<title>` tag from `AWS SAA Quiz` to `Sleepy Study Guide`.
 
-- [ ] **Step 4: Create exam data directory and meta.json**
+- [x] **Step 4: Create exam data directory and meta.json**
 
 ```bash
 mkdir -p src/data/exams/aws-saa
@@ -68,7 +68,7 @@ Create `src/data/exams/aws-saa/meta.json`:
 }
 ```
 
-- [ ] **Step 5: Create exam registry**
+- [x] **Step 5: Create exam registry**
 
 Create `src/data/exams/index.js`:
 
@@ -88,13 +88,13 @@ export function findExam(slug) {
 }
 ```
 
-- [ ] **Step 6: Move questions.json to new location**
+- [x] **Step 6: Move questions.json to new location**
 
 ```bash
 git mv src/data/questions.json src/data/exams/aws-saa/questions.json
 ```
 
-- [ ] **Step 7: Add localStorage migration to main.jsx**
+- [x] **Step 7: Add localStorage migration to main.jsx**
 
 Read `src/main.jsx`. Add the migration block before the `createRoot` call. The migration runs once at startup, before any component mounts:
 
@@ -112,7 +112,7 @@ for (const [oldKey, newKey] of legacyMigrations) {
 }
 ```
 
-- [ ] **Step 8: Parameterize useQuizState**
+- [x] **Step 8: Parameterize useQuizState**
 
 Read `src/hooks/useQuizState.js`. Make these changes:
 
@@ -129,7 +129,7 @@ export const getReviewStatusKey = (slug) => `sleepy-${slug}-review-status`
 
 4. Inside the hook, replace every use of the old `STORAGE_KEY` constant with `getStorageKey(slug)` and every use of `REVIEW_STATUS_KEY` with `getReviewStatusKey(slug)`. The `questionsData` variable name stays the same (it was the import name, now it's the parameter name), so all existing references to `questionsData` inside the hook continue to work without changes.
 
-- [ ] **Step 9: Update App.jsx to use new data path**
+- [x] **Step 9: Update App.jsx to use new data path**
 
 Read `src/components/App.jsx`. Make these changes:
 
@@ -157,7 +157,7 @@ case 'review':
   return <ReviewQueue quizState={quizState} questions={questionsData} slug="aws-saa" onExit={() => setView('dashboard')} />
 ```
 
-- [ ] **Step 10: Update Dashboard.jsx to receive questions and slug via props**
+- [x] **Step 10: Update Dashboard.jsx to receive questions and slug via props**
 
 Read `src/components/Dashboard.jsx`. Make these changes:
 
@@ -179,7 +179,7 @@ export default function Dashboard({ quizState, questions: questionsData, slug, o
 
 5. Change the hardcoded title `"AWS SAA Quiz"` to use a generic title or the exam name. For now in Task 1, use `"Quiz"` as a placeholder (Task 2 will pass the full exam name from meta.json).
 
-- [ ] **Step 11: Update ReviewQueue.jsx to receive questions and slug via props**
+- [x] **Step 11: Update ReviewQueue.jsx to receive questions and slug via props**
 
 Read `src/components/ReviewQueue.jsx`. Make these changes:
 
@@ -199,7 +199,7 @@ export default function ReviewQueue({ quizState, questions: questionsData, slug,
 
 4. Replace every use of `REVIEW_STATUS_KEY` with `getReviewStatusKey(slug)`.
 
-- [ ] **Step 12: Verify the app works**
+- [x] **Step 12: Verify the app works**
 
 ```bash
 npm run dev
@@ -212,7 +212,7 @@ Open the app in a browser. Verify:
 - Starting a quiz, answering questions, and viewing the review queue all work
 - Check the browser console for any import errors
 
-- [ ] **Step 13: Commit**
+- [x] **Step 13: Commit**
 
 ```bash
 git add -A
@@ -240,7 +240,7 @@ git commit -m "feat: reorganize data for multi-exam support and parameterize sta
 - Produces: `ExamLayout` component — provides `{ quizState, questions, exam, slug }` via React Router's Outlet context
 - Produces: All views accessible via URL routes (`/exam/:slug`, `/exam/:slug/quiz`, `/exam/:slug/review`)
 
-- [ ] **Step 1: Create NavHeader.jsx**
+- [x] **Step 1: Create NavHeader.jsx**
 
 Create `src/components/NavHeader.jsx`:
 
@@ -265,7 +265,7 @@ export default function NavHeader({ examName }) {
 }
 ```
 
-- [ ] **Step 2: Create ExamLayout.jsx**
+- [x] **Step 2: Create ExamLayout.jsx**
 
 Create `src/components/ExamLayout.jsx`. This component handles dynamic question loading and provides exam data to child routes via Outlet context. It splits into two components so `useQuizState` is not called conditionally (rules of hooks):
 
@@ -317,7 +317,7 @@ export default function ExamLayout() {
 }
 ```
 
-- [ ] **Step 3: Wrap app with BrowserRouter in main.jsx**
+- [x] **Step 3: Wrap app with BrowserRouter in main.jsx**
 
 Read `src/main.jsx`. Wrap the `<App />` component with `<BrowserRouter>`:
 
@@ -335,7 +335,7 @@ createRoot(document.getElementById('root')).render(
 )
 ```
 
-- [ ] **Step 4: Rewrite App.jsx with Routes**
+- [x] **Step 4: Rewrite App.jsx with Routes**
 
 Replace the entire contents of `src/components/App.jsx`. Remove the `useState` state machine, the `useQuizState` call, the `questionsData` import, and all the callback props. Replace with route definitions:
 
@@ -364,7 +364,7 @@ export default function App() {
 
 Note: The `/` route temporarily redirects to `/exam/aws-saa`. Task 3 replaces this with the ExamPicker homepage.
 
-- [ ] **Step 5: Update Dashboard.jsx for router navigation**
+- [x] **Step 5: Update Dashboard.jsx for router navigation**
 
 Read `src/components/Dashboard.jsx`. Make these changes:
 
@@ -392,7 +392,7 @@ export default function Dashboard() {
 
 5. Replace `onClick={onOpenReview}` with `onClick={() => navigate('review')}` (relative route).
 
-- [ ] **Step 6: Update Quiz.jsx for router navigation**
+- [x] **Step 6: Update Quiz.jsx for router navigation**
 
 Read `src/components/Quiz.jsx`. Make these changes:
 
@@ -417,7 +417,7 @@ export default function Quiz() {
 
 4. Remove `onExit` from any `useCallback` dependency arrays.
 
-- [ ] **Step 7: Update ReviewQueue.jsx for router navigation**
+- [x] **Step 7: Update ReviewQueue.jsx for router navigation**
 
 Read `src/components/ReviewQueue.jsx`. Make these changes:
 
@@ -437,7 +437,7 @@ export default function ReviewQueue() {
 
 3. Replace `onClick={onExit}` with `onClick={() => navigate('..')}`.
 
-- [ ] **Step 8: Verify routing works**
+- [x] **Step 8: Verify routing works**
 
 ```bash
 npm run dev
@@ -456,7 +456,7 @@ Open the app in a browser. Verify:
 - Escape key in quiz navigates back to the dashboard
 - Keyboard shortcuts (1-5, Enter, arrow keys) still work in the quiz
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -476,7 +476,7 @@ git commit -m "feat: add URL routing with NavHeader and ExamLayout"
 - Consumes: `getStorageKey(slug)` from `src/hooks/useQuizState.js` (Task 1) — to read per-exam progress from localStorage
 - Consumes: `NavHeader` from `src/components/NavHeader.jsx` (Task 2) — rendered without breadcrumb on the homepage
 
-- [ ] **Step 1: Create ExamPicker.jsx**
+- [x] **Step 1: Create ExamPicker.jsx**
 
 Create `src/components/ExamPicker.jsx`:
 
@@ -557,7 +557,7 @@ export default function ExamPicker() {
 ```
 
 
-- [ ] **Step 2: Replace redirect with ExamPicker in App.jsx**
+- [x] **Step 2: Replace redirect with ExamPicker in App.jsx**
 
 Read `src/components/App.jsx`. Replace the temporary `/` route that redirects to `/exam/aws-saa`:
 
@@ -578,7 +578,7 @@ import ExamPicker from './ExamPicker'
 
 Remove the `NavHeader` import from App.jsx if it's no longer used there (ExamPicker and ExamLayout each render their own NavHeader). Also remove the `Navigate` import if it's no longer used (check the catch-all route - if it still uses `Navigate`, keep it).
 
-- [ ] **Step 3: Verify the homepage**
+- [x] **Step 3: Verify the homepage**
 
 ```bash
 npm run dev
@@ -595,7 +595,7 @@ Open the app in a browser. Verify:
 - Clicking "Sleepy Study Guide" in the per-exam header navigates back to `/`
 - The full flow works: homepage -> exam dashboard -> quiz -> answer questions -> back to dashboard -> homepage (all via clicking/navigation)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add -A

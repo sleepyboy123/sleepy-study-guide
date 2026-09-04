@@ -1,15 +1,13 @@
 import { useState, useCallback, useMemo } from 'react';
-import questionsData from '../data/questions.json';
 
-export const STORAGE_KEY = 'aws-saa-quiz-state';
-export const REVIEW_STATUS_KEY = 'aws-saa-review-status';
+export const getStorageKey = (slug) => `sleepy-${slug}-quiz-state`
+export const getReviewStatusKey = (slug) => `sleepy-${slug}-review-status`
 
-function loadState() {
+function loadState(slug) {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(getStorageKey(slug));
     if (!stored) return null;
     const saved = JSON.parse(stored);
-    // Basic schema validation - discard corrupt/tampered state
     if (
       typeof saved !== 'object' || saved === null ||
       typeof saved.answers !== 'object' || saved.answers === null ||
@@ -23,8 +21,8 @@ function loadState() {
   }
 }
 
-function saveState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function saveState(slug, state) {
+  localStorage.setItem(getStorageKey(slug), JSON.stringify(state));
 }
 
 function generateShuffleOrder(length) {
@@ -43,9 +41,9 @@ const DEFAULT_SETTINGS = {
   filterConfidence: null,
 };
 
-export default function useQuizState() {
+export default function useQuizState(slug, questionsData) {
   const [state, setState] = useState(() => {
-    const saved = loadState();
+    const saved = loadState(slug);
     if (saved) return saved;
     return {
       answers: {},
@@ -58,10 +56,10 @@ export default function useQuizState() {
   const persist = useCallback((updater) => {
     setState(prev => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
-      saveState(next);
+      saveState(slug, next);
       return next;
     });
-  }, []);
+  }, [slug]);
 
   const filteredQuestions = useMemo(() => {
     let filtered = questionsData;
@@ -80,7 +78,7 @@ export default function useQuizState() {
       filtered = order.map(i => questionsData[i]).filter(Boolean);
     }
     return filtered;
-  }, [state.settings, state.answers, state.shuffleOrder]);
+  }, [questionsData, state.settings, state.answers, state.shuffleOrder]);
 
   const currentQuestion = filteredQuestions[state.currentQuestionIndex] || null;
 
@@ -100,7 +98,7 @@ export default function useQuizState() {
         },
       },
     }));
-  }, [persist]);
+  }, [questionsData, persist]);
 
   const nextQuestion = useCallback(() => {
     persist(prev => ({
@@ -131,7 +129,7 @@ export default function useQuizState() {
       shuffleOrder: generateShuffleOrder(questionsData.length),
       settings: prev.settings,
     }));
-  }, [persist]);
+  }, [questionsData, persist]);
 
   const stats = useMemo(() => {
     const answered = Object.keys(state.answers).length;
@@ -144,13 +142,13 @@ export default function useQuizState() {
       percentage: answered > 0 ? Math.round((correctCount / answered) * 100) : 0,
       filteredTotal: filteredQuestions.length,
     };
-  }, [state.answers, filteredQuestions.length]);
+  }, [questionsData, state.answers, filteredQuestions.length]);
 
   const categories = useMemo(() => {
     const cats = {};
     questionsData.forEach(q => { cats[q.category] = (cats[q.category] || 0) + 1; });
     return Object.entries(cats).sort((a, b) => b[1] - a[1]);
-  }, []);
+  }, [questionsData]);
 
   return {
     questions: questionsData,

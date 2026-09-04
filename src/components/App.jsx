@@ -1,25 +1,20 @@
-import { useState } from 'react';
-import useQuizState from '@/hooks/useQuizState';
-import Dashboard from './Dashboard';
-import Quiz from './Quiz';
-import ReviewQueue from './ReviewQueue';
+import { Routes, Route, Navigate } from 'react-router-dom'
+import ExamPicker from './ExamPicker'
+import ExamLayout from './ExamLayout'
+import Dashboard from './Dashboard'
+import Quiz from './Quiz'
+import ReviewQueue from './ReviewQueue'
 
 export default function App() {
-  const [view, setView] = useState('dashboard');
-  const quizState = useQuizState();
-
-  switch (view) {
-    case 'quiz':
-      return <Quiz quizState={quizState} onExit={() => setView('dashboard')} />;
-    case 'review':
-      return <ReviewQueue quizState={quizState} onExit={() => setView('dashboard')} />;
-    default:
-      return (
-        <Dashboard
-          quizState={quizState}
-          onStartQuiz={() => setView('quiz')}
-          onOpenReview={() => setView('review')}
-        />
-      );
-  }
+  return (
+    <Routes>
+      <Route path="/" element={<ExamPicker />} />
+      <Route path="/exam/:slug" element={<ExamLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="quiz" element={<Quiz />} />
+        <Route path="review" element={<ReviewQueue />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  )
 }

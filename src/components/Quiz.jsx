@@ -1,10 +1,13 @@
 import { useEffect, useCallback } from 'react';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import QuestionCard from './QuestionCard';
 import Feedback from './Feedback';
 import QuizProgress from './QuizProgress';
 
-export default function Quiz({ quizState, onExit }) {
+export default function Quiz() {
+  const { quizState } = useOutletContext();
+  const navigate = useNavigate();
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -23,7 +26,7 @@ export default function Quiz({ quizState, onExit }) {
     if (!currentQuestion) return;
 
     if (e.key === 'Escape') {
-      onExit();
+      navigate('..');
       return;
     }
 
@@ -48,7 +51,7 @@ export default function Quiz({ quizState, onExit }) {
     if (e.key === 'Enter') {
       document.querySelector('[data-submit]')?.click();
     }
-  }, [currentQuestion, existingAnswer, isLastQuestion, nextQuestion, previousQuestion, onExit]);
+  }, [currentQuestion, existingAnswer, isLastQuestion, nextQuestion, previousQuestion, navigate]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -59,7 +62,7 @@ export default function Quiz({ quizState, onExit }) {
     return (
       <div className="text-center py-16">
         <h2 className="text-xl font-semibold mb-4">No questions match your filters</h2>
-        <Button variant="secondary" onClick={onExit}>Back to Dashboard</Button>
+        <Button variant="secondary" onClick={() => navigate('..')}>Back to Dashboard</Button>
       </div>
     );
   }
@@ -93,7 +96,7 @@ export default function Quiz({ quizState, onExit }) {
               Next Question
             </Button>
           ) : (
-            <Button onClick={onExit} className="flex-1">
+            <Button onClick={() => navigate('..')} className="flex-1">
               Finish
             </Button>
           )}

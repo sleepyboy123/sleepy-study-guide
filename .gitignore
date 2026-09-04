@@ -2,3 +2,4 @@
 node_modules/
 dist/
 AWS SAA/
+.csa-sdlc/

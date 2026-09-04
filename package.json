@@ -1,5 +1,5 @@
 {
-  "name": "aws-saa-quiz",
+  "name": "sleepy-study-guide",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,8 @@
     "lucide-react": "^1.38.0",
     "radix-ui": "^1.6.7",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
