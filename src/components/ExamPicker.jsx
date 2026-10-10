@@ -34,7 +34,7 @@ export default function ExamPicker() {
                 to={`/exam/${exam.slug}`}
                 className="no-underline text-inherit"
               >
-                <div className="bg-white border border-border rounded-xl p-5 hover:shadow-md transition-shadow cursor-pointer">
+                <div className="bg-white border border-border rounded-xl p-5 hover:shadow-md transition-shadow cursor-pointer h-full">
                   <div className="flex items-center gap-2 mb-3">
                     <span
                       className="text-white text-xs font-semibold px-2 py-0.5 rounded"
