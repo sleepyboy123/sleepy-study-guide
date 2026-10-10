@@ -2720,7 +2720,10 @@
     ],
     "explanation": "",
     "isMultiSelect": false,
-    "category": "IAM"
+    "category": "IAM",
+    "images": [
+      "/images/aws-saa-c03/q96.png"
+    ]
   },
   {
     "id": 97,
@@ -7231,7 +7234,11 @@
     ],
     "explanation": "Deleting Amazon EC2 instances.",
     "isMultiSelect": false,
-    "category": "IAM"
+    "category": "IAM",
+    "images": [
+      "/images/aws-saa-c03/q253_1.png",
+      "/images/aws-saa-c03/q253_2.png"
+    ]
   },
   {
     "id": 254,
@@ -12106,7 +12113,10 @@
     ],
     "explanation": "",
     "isMultiSelect": true,
-    "category": "IAM"
+    "category": "IAM",
+    "images": [
+      "/images/aws-saa-c03/q423.png"
+    ]
   },
   {
     "id": 424,
@@ -12274,7 +12284,10 @@
     ],
     "explanation": "",
     "isMultiSelect": false,
-    "category": "IAM"
+    "category": "IAM",
+    "images": [
+      "/images/aws-saa-c03/q429.png"
+    ]
   },
   {
     "id": 430,
@@ -14126,7 +14139,10 @@
     ],
     "explanation": "The request to terminate the EC2 instance does not originate from the CIDR blocks 192.0.2.0/24 or 203.0.113.0/24.",
     "isMultiSelect": false,
-    "category": "IAM"
+    "category": "IAM",
+    "images": [
+      "/images/aws-saa-c03/q494.png"
+    ]
   },
   {
     "id": 495,

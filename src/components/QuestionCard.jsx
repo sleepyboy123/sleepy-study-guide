@@ -34,6 +34,18 @@ export default function QuestionCard({ question, onSubmit, existingAnswer }) {
     <Card className="mb-4">
       <CardContent className="pt-6">
         <p className="text-base leading-8 mb-6 tracking-wide">{question.question}</p>
+        {question.images && question.images.length > 0 && (
+          <div className="flex flex-col gap-3 mb-6">
+            {question.images.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt="Question diagram"
+                className="rounded-lg border max-w-full"
+              />
+            ))}
+          </div>
+        )}
         {question.isMultiSelect && (
           <Badge variant="secondary" className="mb-4">
             Select {requiredSelections} answers
