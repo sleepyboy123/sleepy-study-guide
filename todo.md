@@ -1,1 +1,0 @@
-- convert application to a PWA
