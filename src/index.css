@@ -29,6 +29,12 @@ body {
   text-align: left;
 }
 
+/* Select dropdown: solid background so cards don't bleed through */
+[data-slot="select-content"] {
+  background-color: #fff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
 /* Alert dialog overlay: darker + blurred for clear separation */
 [data-slot="alert-dialog-overlay"] {
   background-color: rgba(0, 0, 0, 0.6);
