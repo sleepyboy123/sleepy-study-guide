@@ -103,7 +103,7 @@ export default function ReviewWrong() {
           <SelectTrigger className="w-56">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="max-h-60">
             <SelectItem value="all">All categories ({wrongQuestions.length})</SelectItem>
             {wrongCategories.map(([cat, count]) => (
               <SelectItem key={cat} value={cat}>{cat} ({count})</SelectItem>
