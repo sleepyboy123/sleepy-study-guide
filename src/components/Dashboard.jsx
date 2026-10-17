@@ -62,6 +62,11 @@ export default function Dashboard() {
             </AlertDialogContent>
           </AlertDialog>
         )}
+        {stats.incorrect > 0 && (
+          <Button variant="outline" onClick={() => navigate('review')}>
+            Review Wrong Answers ({stats.incorrect})
+          </Button>
+        )}
       </div>
 
       <Card className="mb-6">

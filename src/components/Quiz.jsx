@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import QuestionCard from './QuestionCard';
@@ -18,6 +18,15 @@ export default function Quiz() {
     nextQuestion,
     previousQuestion,
   } = quizState;
+
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setElapsedSeconds(prev => prev + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const existingAnswer = currentQuestion ? answers[currentQuestion.id] : null;
   const isLastQuestion = currentQuestionIndex >= filteredQuestions.length - 1;
@@ -73,6 +82,7 @@ export default function Quiz() {
         current={currentQuestionIndex}
         total={filteredQuestions.length}
         stats={stats}
+        elapsedSeconds={elapsedSeconds}
       />
       <QuestionCard
         key={currentQuestion.id}
